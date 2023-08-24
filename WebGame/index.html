@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+
+  #game-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  #main-image {
+    max-width: 100%;
+    height: 150px;
+    display: block;
+  }
+
+  .hidden-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  .button-container {
+    margin-top: 10px;
+  }
+
+  @media (max-width: 768px) {
+    #game-container {
+      max-width: 80%; /* Adjust container width for smaller screens */
+    }
+
+    .button-container {
+      text-align: center; /* Center buttons on smaller screens */
+    }
+  }
+</style>
+</head>
+<body>
+<div id="game-container">
+  <img id="main-image" src="main-image.jpg" alt="Main Image">
+  <div class="button-container">
+    <button class="spawn-button" data-image="fart.jpg">Click To Fart</button>
+    <button class="spawn-button" data-image="poop.jpg">Click To Poop</button>
+  </div>
+</div>
+
+<script>
+const spawnButtons = document.querySelectorAll('.spawn-button');
+const gameContainer = document.getElementById('game-container');
+
+spawnButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const imageSrc = button.getAttribute('data-image');
+    const hiddenImage = document.createElement('img');
+    hiddenImage.src = imageSrc;
+    hiddenImage.classList.add('hidden-image');
+
+    const randomSize = Math.random() * 50 + 50;
+    hiddenImage.style.width = `${randomSize}px`;
+    hiddenImage.style.height = `${randomSize}px`;
+
+    const xPos = Math.random() * (gameContainer.offsetWidth - randomSize);
+    const yPos = Math.random() * (gameContainer.offsetHeight - randomSize);
+
+    hiddenImage.style.left = `${xPos}px`;
+    hiddenImage.style.top = `${yPos}px`;
+
+    gameContainer.appendChild(hiddenImage);
+  });
+});
+</script>
+</body>
+</html>
